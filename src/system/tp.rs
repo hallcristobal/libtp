@@ -1,4 +1,11 @@
-use super::memory;
+use link::{Link, Inventory};
+
+#[repr(C)]
+pub struct GameInfo {
+    pub link: Link,
+    _p0: [u8; 125],
+    pub inventory: Inventory,
+}
 
 #[repr(C)]
 pub struct GlobalCounters {
@@ -29,6 +36,8 @@ extern "C" {
     pub static mut GLOBAL_COUNTERS: GlobalCounters;
     #[link_name = "g_mDoAud_zelAudio"]
     pub static mut ZEL_AUDIO: ZelAudio;
+    #[link_name = "g_dComIfG_gameInfo"]
+    pub static mut GAME_INFO: GameInfo;
 }
 
 pub fn get_frame_count() -> u32 {

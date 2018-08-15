@@ -8,5 +8,6 @@ pub mod addrs;
 pub mod game;
 pub mod lang_items;
 pub mod system;
+pub mod link;
 
 pub type Addr = usize;

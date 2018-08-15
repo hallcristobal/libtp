@@ -10,3 +10,5 @@ pub const BOSS_FLAG: Addr = 0x80450c98;
 pub const SAVE_STAGE: Addr = 0x80406218;
 pub const SAVE_ROOM: Addr = 0x80406221;
 pub const SAVE_SPAWNPOINT: Addr = 0x80406220;
+
+pub const MATRIX_PTR: Addr = 0x803F1E10;

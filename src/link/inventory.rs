@@ -2,9 +2,14 @@
 pub struct Inventory {
 	pub item_values: ItemValues,
 	pub item_wheel: ItemWheel,
+	_p0: [u8; 32],
+	pub arrow_count: u8, // 62aC
+	pub bomb_bag_1_amnt: u8,
+	pub bomb_bag_2_amnt: u8,
+	pub bomb_bag_3_amnt: u8,
 }
 
-#[repr(C)]
+#[repr(C)] // 24
 pub struct ItemValues{
 	pub gale_boomerang_id: u8,
 	pub lantern_id: u8,
@@ -32,7 +37,7 @@ pub struct ItemValues{
 	pub slingshot_id: u8,
 }
 
-#[repr(C)]
+#[repr(C)] // 24
 pub struct ItemWheel {
 	pub item_slot_1: u8,
 	pub item_slot_2: u8,

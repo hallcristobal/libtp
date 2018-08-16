@@ -1,10 +1,25 @@
 use link::{Link, Inventory};
 
 #[repr(C)]
+pub struct Vec3 {
+    pub x: f32,
+    pub y: f32,
+    pub z: f32,
+}
+
+#[repr(C)]
+pub struct Momentum {
+    _p0: [u8; 0x4F8],
+    pub link_momentum: Vec3
+}
+
+#[repr(C)]
 pub struct GameInfo {
-    pub link: Link,
-    _p0: [u8; 125],
-    pub inventory: Inventory,
+    pub link: Link, // 804061c0
+    _p0: [u8; 124], // 804061e0
+    pub inventory: Inventory, // 0x8040625C
+    _p1: [u8; 0x55C8], // 0x804062B0
+    pub momentum_ptr: Option<&'static mut Momentum>, // 8040B878
 }
 
 #[repr(C)]
@@ -48,6 +63,16 @@ pub fn get_link_debug() -> Option<&'static mut LinkDebug> {
     unsafe {
         if let Some(ref mut link_debug) = ZEL_AUDIO.link_debug_ptr {
             Some(*link_debug)
+        } else {
+            None
+        }
+    }
+}
+
+pub fn get_link_momentum() -> Option<&'static mut Momentum> {
+    unsafe {
+        if let Some(ref mut link_momentum) = GAME_INFO.momentum_ptr {
+            Some(*link_momentum)
         } else {
             None
         }

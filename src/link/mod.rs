@@ -28,6 +28,7 @@ pub struct Link {
 	wallet_upgrade: u8,		// D9
 	_p7: [u8; 4],			// DA-D
 	is_wolf: bool,			// DE
+	_p8: u8					// DF
 }
 
 impl Link {

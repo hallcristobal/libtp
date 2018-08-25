@@ -1,4 +1,4 @@
-use link::{Link, Inventory};
+use link::{Inventory, Link};
 
 #[repr(C)]
 pub struct Vec3 {
@@ -10,15 +10,15 @@ pub struct Vec3 {
 #[repr(C)]
 pub struct Momentum {
     _p0: [u8; 0x4F8],
-    pub link_momentum: Vec3
+    pub link_momentum: Vec3,
 }
 
 #[repr(C)]
 pub struct GameInfo {
-    pub link: Link, // 804061c0
-    _p0: [u8; 124], // 804061e0
-    pub inventory: Inventory, // 0x8040625C
-    _p1: [u8; 0x55C8], // 0x804062B0
+    pub link: Link,                                  // 804061c0
+    _p0: [u8; 124],                                  // 804061e0
+    pub inventory: Inventory,                        // 8040625C
+    _p1: [u8; 0x55C8],                               // 804062B0
     pub momentum_ptr: Option<&'static mut Momentum>, // 8040B878
 }
 

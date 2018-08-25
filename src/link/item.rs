@@ -43,7 +43,7 @@ items! {
     OOCCOOS_NOTE: 0x2D
     // Letter
     AURUS_MEMO: 0x90
-    ASHEIS_SKETCH: 0x2D
+    ASHEIS_SKETCH: 0x91
     // Rod
     FISHING_ROD: 0x4A
     FISHING_ROD_BEE_LARVA: 0x5B

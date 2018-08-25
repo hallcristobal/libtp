@@ -1,4 +1,10 @@
 use system::tp::GAME_INFO;
+use super::super::arrayvec::ArrayVec;
+
+extern "C" {
+    #[link_name="execItemGet(u8)"]
+    fn item_get(item_id: u8);
+}
 
 fn get_state() -> InventoryState {
     use super::item::ItemIdentifier::*;
@@ -120,7 +126,7 @@ impl Inventory {
             DOMINION_ROD_ID_VALUE => self.item_values.value[DOMINION_ROD_ID_VALUE],
             BALL_AND_CHAIN_ID_VALUE => self.item_values.value[BALL_AND_CHAIN_ID_VALUE],
             SPINNER_ID_VALUE => self.item_values.value[SPINNER_ID_VALUE],
-            HERO_S_BOW_ID_VALUE => self.item_values.value[HERO_S_BOW_ID_VALUE],
+            HEROS_BOW_ID_VALUE => self.item_values.value[HEROS_BOW_ID_VALUE],
             IRON_BOOTS_ID_VALUE => self.item_values.value[IRON_BOOTS_ID_VALUE],
             GALE_BOOMERANG_ID_VALUE => self.item_values.value[GALE_BOOMERANG_ID_VALUE],
             LANTERN_ID_VALUE => self.item_values.value[LANTERN_ID_VALUE],
@@ -144,89 +150,56 @@ impl Inventory {
     }
 
     pub fn set_by_slot_id(&mut self, slot_id: usize, item_id: u8) {
-        use super::item::ItemIdentifier::*;
         let state = get_state();
-        match slot_id {
-            DOUBLE_CLAWSHOT_ID_VALUE => {
-                if item_id == 0xFF {
-                    self.item_wheel.slot[state.double_clawshots_slot] = 0xFF;
-                } else {
-                    if state.double_clawshots_slot == 0xFF {
+        let inv_slot = match slot_id {
+            DOUBLE_CLAWSHOT_ID_VALUE => state.double_clawshots_slot,
+            DOMINION_ROD_ID_VALUE => state.dominion_rod_slot,
+            BALL_AND_CHAIN_ID_VALUE => state.ball_chain_slot,
+            SPINNER_ID_VALUE => state.spinner_slot,
+            HEROS_BOW_ID_VALUE => state.heros_bow_slot,
+            IRON_BOOTS_ID_VALUE => state.iron_boots_slot,
+            GALE_BOOMERANG_ID_VALUE => state.boomerang_slot,
+            LANTERN_ID_VALUE => state.lantern_slot,
+            SLINGSHOT_ID_VALUE => state.slingshot_slot,
+            CLAWSHOT_ID_VALUE => state.clawshot_slot,
+            FISHING_ROD_ID_VALUE => state.fishing_rod_slot,
+            HAWKEYE_ID_VALUE => state.hawkeye_slot,
+            BOMB_BAG_1_ID_VALUE => state.bomb_bag1_1_slot,
+            BOMB_BAG_2_ID_VALUE => state.bomb_bag1_2_slot,
+            BOMB_BAG_3_ID_VALUE => state.bomb_bag1_3_slot,
+            BOTTLE_1_ID_VALUE => state.bottle_1_slot,
+            BOTTLE_2_ID_VALUE =>state.bottle_2_slot,
+            BOTTLE_3_ID_VALUE =>state.bottle_3_slot,
+            BOTTLE_4_ID_VALUE =>state.bottle_4_slot,
+            SKY_BOOK_ID_VALUE => state.sky_book_slot,
+            ILIA_QUEST_ID_VALUE => state.ilia_quest_slot,
+            OOCCOO_ID_VALUE => state.ooccoo_slot,
+            LETTER_ID_VALUE => state.letter_slot,
+            _ => {slot_id}
+        };
 
-                    } else {
-                        self.item_wheel.slot[state.double_clawshots_slot] = DoubleClawshots as u8;
-                    }
-                }
-                self.item_values.value[DOUBLE_CLAWSHOT_ID_VALUE] = item_id;
-            }
-            DOMINION_ROD_ID_VALUE => {
-                self.item_values.value[DOMINION_ROD_ID_VALUE] = item_id;
-            }
-            BALL_AND_CHAIN_ID_VALUE => {
-                self.item_values.value[BALL_AND_CHAIN_ID_VALUE] = item_id;
-            }
-            SPINNER_ID_VALUE => {
-                self.item_values.value[SPINNER_ID_VALUE] = item_id;
-            }
-            HERO_S_BOW_ID_VALUE => {
-                self.item_values.value[HERO_S_BOW_ID_VALUE] = item_id;
-            }
-            IRON_BOOTS_ID_VALUE => {
-                self.item_values.value[IRON_BOOTS_ID_VALUE] = item_id;
-            }
-            GALE_BOOMERANG_ID_VALUE => {
-                self.item_values.value[GALE_BOOMERANG_ID_VALUE] = item_id;
-            }
-            LANTERN_ID_VALUE => {
-                self.item_values.value[LANTERN_ID_VALUE] = item_id;
-            }
-            SLINGSHOT_ID_VALUE => {
-                self.item_values.value[SLINGSHOT_ID_VALUE] = item_id;
-            }
-            CLAWSHOT_ID_VALUE => {
-                self.item_values.value[CLAWSHOT_ID_VALUE] = item_id;
-            }
-            FISHING_ROD_ID_VALUE => {
-                self.item_values.value[FISHING_ROD_ID_VALUE] = item_id;
-            }
-            HAWKEYE_ID_VALUE => {
-                self.item_values.value[HAWKEYE_ID_VALUE] = item_id;
-            }
-            BOMB_BAG_1_ID_VALUE => {
-                self.item_values.value[BOMB_BAG_1_ID_VALUE] = item_id;
-            }
-            BOMB_BAG_2_ID_VALUE => {
-                self.item_values.value[BOMB_BAG_2_ID_VALUE] = item_id;
-            }
-            BOMB_BAG_3_ID_VALUE => {
-                self.item_values.value[BOMB_BAG_3_ID_VALUE] = item_id;
-            }
-            BOTTLE_1_ID_VALUE => {
-                self.item_values.value[BOTTLE_1_ID_VALUE] = item_id;
-            }
-            BOTTLE_2_ID_VALUE => {
-                self.item_values.value[BOTTLE_2_ID_VALUE] = item_id;
-            }
-            BOTTLE_3_ID_VALUE => {
-                self.item_values.value[BOTTLE_3_ID_VALUE] = item_id;
-            }
-            BOTTLE_4_ID_VALUE => {
-                self.item_values.value[BOTTLE_4_ID_VALUE] = item_id;
-            }
-            SKY_BOOK_ID_VALUE => {
-                self.item_values.value[SKY_BOOK_ID_VALUE] = item_id;
-            }
-            ILIA_QUEST_ID_VALUE => {
-                self.item_values.value[ILIA_QUEST_ID_VALUE] = item_id;
-            }
-            OOCCOO_ID_VALUE => {
-                self.item_values.value[OOCCOO_ID_VALUE] = item_id;
-            }
-            LETTER_ID_VALUE => {
-                self.item_values.value[LETTER_ID_VALUE] = item_id;
-            }
-            _ => {}
+        report!("setting values slot {} to {:X}", slot_id, item_id);
+
+        if item_id == 0xFF {
+            self.remove_item(inv_slot);
+        } else if inv_slot == 0xFF {
+                self.add_item(item_id);
         }
+        self.item_values.value[slot_id] = item_id;
+    }
+
+    fn remove_item(&mut self, wheel_slot: usize) {
+        let mut new_wheel = ArrayVec::from(self.item_wheel.slot);
+        if let Some(_) = new_wheel.pop_at(wheel_slot) {
+            new_wheel.push(0xFF);
+            new_wheel.into_iter().enumerate().for_each(|(i, id)| {
+                self.item_wheel.slot[i] = id;
+            });
+        }
+    }
+
+    fn add_item(&mut self, item_id: u8) {
+        unsafe { item_get(item_id); }
     }
 }
 
@@ -234,7 +207,7 @@ pub const GALE_BOOMERANG_ID_VALUE: usize = 0;
 pub const LANTERN_ID_VALUE: usize = 1;
 pub const SPINNER_ID_VALUE: usize = 2;
 pub const IRON_BOOTS_ID_VALUE: usize = 3;
-pub const HERO_S_BOW_ID_VALUE: usize = 4;
+pub const HEROS_BOW_ID_VALUE: usize = 4;
 pub const HAWKEYE_ID_VALUE: usize = 5;
 pub const BALL_AND_CHAIN_ID_VALUE: usize = 6;
 pub const DOMINION_ROD_ID_VALUE: usize = 8;

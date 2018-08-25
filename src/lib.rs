@@ -2,6 +2,7 @@
 #![feature(panic_implementation)]
 
 extern crate arrayvec;
+#[macro_use(report)]
 extern crate gcn;
 
 pub mod addrs;

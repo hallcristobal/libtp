@@ -18,7 +18,7 @@ pub struct GameInfo {
     pub link: Link,                                  // 804061c0
     _p0: [u8; 124],                                  // 804061e0
     pub inventory: Inventory,                        // 8040625C
-    _p1: [u8; 0x55C8],                               // 804062B0
+    _p1: [u8; 0x55BF],                               // 804062B9
     pub momentum_ptr: Option<&'static mut Momentum>, // 8040B878
 }
 

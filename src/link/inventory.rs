@@ -1,5 +1,6 @@
 use system::tp::GAME_INFO;
 use super::super::arrayvec::ArrayVec;
+use super::super::game::Flag;
 
 extern "C" {
     #[link_name="execItemGet(u8)"]
@@ -104,20 +105,57 @@ impl Default for InventoryState {
 
 #[repr(C)]
 pub struct Inventory {
-    pub item_values: ItemValues,
-    pub item_wheel: ItemWheel,
-    _p0: [u8; 3],
-    pub rupee_cs_flags: u8,
-    _p1: [u8; 28],
+    pub item_values: ItemValues, // 625C
+    pub item_wheel: ItemWheel, // 6274
+    _p0: [u8; 3], // 628C
+    pub rupee_cs_flags: u8, // 628F
+    _p1: u8, // 6290
+    pub collection_flags_0: u8, // 6291
+    pub collection_flags_1: u8, // 6292
+    _p2: [u8; 3],
+    pub master_sword_flag: u8, //6296
+    _p3: [u8; 21],
     pub arrow_count: u8, // 62aC
     pub bomb_bag_1_amnt: u8,
     pub bomb_bag_2_amnt: u8,
     pub bomb_bag_3_amnt: u8,
+    _p4: [u8; 8],
+    pub arrow_capacity: u8, // 62b8
 }
 
 impl Inventory {
     pub fn get_inventory() -> &'static mut Inventory {
         unsafe { &mut GAME_INFO.inventory }
+    }
+    pub fn bomb_capacity_flag(&mut self) -> Flag {
+        Flag::from_ref(&mut self.master_sword_flag, 7)
+    }
+    pub fn ordon_sword_flag(&mut self) -> Flag {
+        Flag::from_ref(&mut self.collection_flags_1, 0)
+    }
+    pub fn master_sword_flag(&mut self) -> Flag {
+        Flag::from_ref(&mut self.collection_flags_1, 1)
+    }
+    pub fn light_sword_flag(&mut self) -> Flag {
+        Flag::from_ref(&mut self.master_sword_flag, 1)
+    }
+    pub fn ordon_shield_flag(&mut self) -> Flag {
+        Flag::from_ref(&mut self.collection_flags_1, 2)
+    }
+    pub fn wooden_shield_flag(&mut self) -> Flag {
+        Flag::from_ref(&mut self.collection_flags_1, 3)
+    }
+    pub fn hylian_shield_flag(&mut self) -> Flag {
+        Flag::from_ref(&mut self.collection_flags_1, 4)
+    }
+    pub fn heros_clothes_flag(&mut self) -> Flag {
+        Flag::from_ref(&mut self.collection_flags_1, 7)
+    }
+    pub fn magic_armor_flag(&mut self) -> Flag {
+        Flag::from_ref(&mut self.collection_flags_0, 0)
+    }
+    pub fn zora_armor_flag(&mut self) -> Flag {
+        Flag::from_ref(&mut self.collection_flags_0, 1)
     }
 
     pub fn get_by_slot_id(&self, slot_id: usize) -> u8 {
@@ -189,6 +227,8 @@ impl Inventory {
     }
 
     fn remove_item(&mut self, wheel_slot: usize) {
+        // TODO: If item is combo'd, then remove from equip to prevent
+        // game-internal errors.
         let mut new_wheel = ArrayVec::from(self.item_wheel.slot);
         if let Some(_) = new_wheel.pop_at(wheel_slot) {
             new_wheel.push(0xFF);

@@ -39,4 +39,8 @@ impl Link {
     pub fn get_position() -> Option<&'static mut tp::LinkDebug> {
         tp::get_link_debug()
     }
+
+    pub fn get_air() -> &'static mut u16 {
+        unsafe { &mut GAME_INFO.link_air_meter }
+    }
 }

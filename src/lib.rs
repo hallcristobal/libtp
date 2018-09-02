@@ -1,5 +1,5 @@
 #![no_std]
-#![feature(panic_implementation)]
+#![feature(panic_handler)]
 
 extern crate arrayvec;
 #[macro_use(report)]

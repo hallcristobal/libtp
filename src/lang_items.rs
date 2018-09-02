@@ -1,6 +1,6 @@
 use core::panic::PanicInfo;
 
-#[panic_implementation]
+#[panic_handler]
 #[no_mangle]
 pub fn my_panic(info: &PanicInfo) -> ! {
     report!("{}", info);

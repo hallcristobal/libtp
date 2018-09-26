@@ -1,11 +1,11 @@
 use system::memory::write_str;
 #[repr(C)]
 pub struct Entrance {
-	stage: [u8; 8], 	// 8040AFCE
-	_p0: u8, 			// 8040AFD6
-	spawn: u8, 			// 8040AFD7
-	room: u8,  			// 8040AFD8
-	state: u8, 			// 8040AFD9
+	pub stage: [u8; 8], 	// 8040AFCE
+	_p0: u8, 			    // 8040AFD6
+	pub spawn: u8, 			// 8040AFD7
+	pub room: u8,  			// 8040AFD8
+	pub state: u8, 			// 8040AFD9
 }
 
 impl Entrance {

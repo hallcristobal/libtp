@@ -4,9 +4,9 @@ use system::tp::GAME_INFO;
 
 #[repr(C)]
 pub struct Warp {
-	entrance: Entrance,	// 8040AFCE
-	_p0: [u8; 2], 		// 8040AFDA
-	enabled: bool, 		// 8040AFDC
+	pub entrance: Entrance,	// 8040AFCE
+	_p0: [u8; 2], 		    // 8040AFDA
+	pub enabled: bool, 		// 8040AFDC
 }
 
 impl Warp {

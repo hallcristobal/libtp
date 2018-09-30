@@ -1,5 +1,6 @@
 use system::memory::write_str;
 #[repr(C)]
+#[derive(Clone)]
 pub struct Entrance {
 	pub stage: [u8; 8], 	// 8040AFCE
 	_p0: u8, 			    // 8040AFD6
@@ -9,7 +10,7 @@ pub struct Entrance {
 }
 
 impl Entrance {
-	pub fn new(stage: &str, spawn: u8, room: u8, state: u8) -> Entrance {
+	pub fn new(stage: &str, room: u8, spawn: u8, state: u8) -> Entrance {
 		let mut entrance = Entrance {
 			stage: [0;8],
 			_p0: 0,
@@ -19,5 +20,15 @@ impl Entrance {
 		};
 		write_str(entrance.stage.as_mut_ptr(), stage);
 		entrance
+	}
+
+	pub const fn default() -> Entrance {
+		Entrance {
+			stage: [0;8],
+			_p0: 0,
+			spawn: 0xFF,
+			room: 0xFF,
+			state: 0xFF,
+		}
 	}
 }

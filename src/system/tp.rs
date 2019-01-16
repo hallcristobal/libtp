@@ -36,11 +36,11 @@ pub struct GlobalCounters {
 
 #[repr(C)]
 pub struct ZelAudio {
-    _p0: [u8; 0x4C4],                                       // 803DBF4C
-    pub time_hours: u8,                                     // 803DC410
-    pub time_minutes: u8,                                   // 803DC411
-    _p1: [u8; 0xA42],                                       // 803DC412
-    pub link_debug_ptr: Option<&'static mut LinkDebug>,     // 803DCE54
+    _p0: [u8; 0x4C4],                                   // 803DBF4C
+    pub time_hours: u8,                                 // 803DC410
+    pub time_minutes: u8,                               // 803DC411
+    _p1: [u8; 0xA42],                                   // 803DC412
+    pub link_debug_ptr: Option<&'static mut LinkDebug>, // 803DCE54
 }
 
 #[repr(C)]
@@ -54,6 +54,12 @@ pub struct LinkDebug {
     pub speed: f32,
 }
 
+#[repr(C)]
+pub struct LinkRollConstants {
+    _p0: [u8; 0x48],     // 8038D7BC
+    pub roll_factor: f32 // 8038D804
+}
+
 extern "C" {
     #[link_name = "g_Counter"]
     pub static mut GLOBAL_COUNTERS: GlobalCounters;
@@ -61,6 +67,8 @@ extern "C" {
     pub static mut ZEL_AUDIO: ZelAudio;
     #[link_name = "g_dComIfG_gameInfo"]
     pub static mut GAME_INFO: GameInfo;
+    #[link_name = "daAlinkHIO_frontRoll_c0::m"]
+    pub static mut LINK_ROLL_CONSTANTS: LinkRollConstants;
     #[link_name = "sConsole"]
     pub static mut SCONSOLE: u8;
 }
@@ -90,7 +98,5 @@ pub fn get_link_momentum() -> Option<&'static mut Momentum> {
 }
 
 pub fn boss_flags_value() -> &'static mut u8 {
-    unsafe {
-        &mut *(&mut SCONSOLE as *mut u8).offset(8)
-    }
+    unsafe { &mut *(&mut SCONSOLE as *mut u8).offset(8) }
 }

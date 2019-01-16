@@ -1,5 +1,4 @@
 #![no_std]
-#![feature(min_const_fn)]
 
 extern crate arrayvec;
 #[macro_use(report)]

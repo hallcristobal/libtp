@@ -17,13 +17,15 @@ pub struct Momentum {
 #[repr(C)]
 pub struct GameInfo {
     pub link: Link,                                  // 804061c0
-    _p0: [u8; 124],                                  // 804061e0
+    _p0: [u8; 0x7C],                                 // 804061e0
     pub inventory: Inventory,                        // 8040625C
     _p1: [u8; 0x4D15],                               // 804062B9
     pub warp: Warp,                                  // 8040AFCE
-    _p2: [u8; 0x89B],                                // 8040AFDD
+    _p2: [u8; 0x190],                                // 8040AFDD
+    pub freeze_game: u8,                             // 8040B16D
+    _p3: [u8; 0x70A],                                // 8040B16E
     pub momentum_ptr: Option<&'static mut Momentum>, // 8040B878
-    _p3: [u8; 0x726],                                // 8040B87C
+    _p4: [u8; 0x726],                                // 8040B87C
     pub link_air_meter: u16,                         // 8040BFA2
 }
 

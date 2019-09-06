@@ -7,6 +7,7 @@ extern crate gcn;
 pub mod addrs;
 pub mod game;
 pub mod lang_items;
+pub mod items;
 pub mod link;
 pub mod system;
 pub mod warping;

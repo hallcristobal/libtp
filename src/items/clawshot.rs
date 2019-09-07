@@ -49,15 +49,15 @@ impl Clawshot {
         unsafe { &mut CLAWSHOT.second_clawshot_wait_frames }
     }
 
-    pub fn third_person_ready_anim_angle() () -> &'static mut u16 {
+    pub fn get_third_person_ready_anim_angle() () -> &'static mut u16 {
         unsafe { &mut CLAWSHOT.third_person_ready_anim_angle }
     }
 
-    pub fn third_person_ready_anim_speed() () -> &'static mut u16 {
+    pub fn get_third_person_ready_anim_speed() () -> &'static mut u16 {
         unsafe { &mut CLAWSHOT.third_person_ready_anim_speed }
     }
 
-    pub fn first_person_ready_anim_frames() -> &'static mut f32 {
+    pub fn get_first_person_ready_anim_frames() -> &'static mut f32 {
         unsafe { &mut CLAWSHOT.first_person_ready_anim_frames}
     }
 

@@ -9,15 +9,15 @@ extern "C" {
 pub struct Clawshot {
     _p0: [u8; 0x04],                            // 8038E9C0
     pub arm_animation1: u16,                    // 8038E9C4 affects first person anim while firing
-    _01: [u8; 0x02],                            // 8038E9C6
+    _p1: [u8; 0x02],                            // 8038E9C6
     pub arm_animation2: u16,                    // 8038E9C8 affects first person anim while firing
     _p2: [u8; 0x22],                            // 8038E9CA
     pub wall_hang_anim_speed: u16,              // 8038E9EC
-    _p2: [u8; 0x02],                            // 8038E9EE
+    _p3: [u8; 0x02],                            // 8038E9EE
     pub wall_hang_anim: u16,                    // 8038E9F0 has something to do with wall anim but not speed specifically
-    _p3: [u8; 0x06],                            // 8038EAF2 
+    _p4: [u8; 0x06],                            // 8038EAF2 
     pub second_clawshot_wait_frames: u16,       // 8038EAF8 how long before you can use clawshot 2 when hanging from wall (ceiling is different) 
-    _p4: [u8; 0x06],                            // 8038EAFA
+    _p5: [u8; 0x06],                            // 8038EAFA
     pub third_person_ready_anim_angle: u16,     // 8038EA00 data type is wrong probably
     pub third_person_ready_anim_speed: u16,     // 8038EA02 data type is wrong probably
     pub first_person_ready_anim_frames: f32,    // 8038EA04
@@ -25,7 +25,7 @@ pub struct Clawshot {
     pub speed: f32,                             // 8038EA0C 
     pub retraction_rate: f32,                   // 8038EA10 
     pub pull_rate: f32,                         // 8038EA14 
-    _p5: [u8; 0x1C],                            // 8038EA18
+    _p6: [u8; 0x1C],                            // 8038EA18
 }
 
 impl Clawshot {
@@ -49,11 +49,11 @@ impl Clawshot {
         unsafe { &mut CLAWSHOT.second_clawshot_wait_frames }
     }
 
-    pub fn get_third_person_ready_anim_angle() () -> &'static mut u16 {
+    pub fn get_third_person_ready_anim_angle() -> &'static mut u16 {
         unsafe { &mut CLAWSHOT.third_person_ready_anim_angle }
     }
 
-    pub fn get_third_person_ready_anim_speed() () -> &'static mut u16 {
+    pub fn get_third_person_ready_anim_speed() -> &'static mut u16 {
         unsafe { &mut CLAWSHOT.third_person_ready_anim_speed }
     }
 
@@ -63,6 +63,10 @@ impl Clawshot {
 
     pub fn get_extension_rate() -> &'static mut f32 {
         unsafe { &mut CLAWSHOT.extension_rate}
+    }
+
+    pub fn get_speed() -> &'static mut f32 {
+        unsafe { &mut CLAWSHOT.speed}
     }
 
     pub fn get_retraction_rate() -> &'static mut f32 {
